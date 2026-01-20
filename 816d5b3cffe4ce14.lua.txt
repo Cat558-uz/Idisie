@@ -1,3 +1,7 @@
+-- script create BY ghost
+
+-- script create BY ghost
+
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -26,7 +30,7 @@ if not container then
 
 	local layout = Instance.new("UIListLayout", container)
 	layout.SortOrder = Enum.SortOrder.LayoutOrder
-	layout.Padding = UDim.new(0, 6)
+	layout.Padding = UDim.new(0, 2)
 	layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
 end
 
@@ -209,6 +213,43 @@ TabButton.MouseButton1Click:Connect(function()
 	TabContent.Visible = true
 end)
 
+--== Função para adicionar TextBox ==--
+local function AddTextbox(name, placeholder, callback)
+	local Frame = Instance.new("Frame", ContentFrame)
+	Frame.Size = UDim2.new(1, -10, 0, 40)
+	Frame.BackgroundColor3 = Color3.fromRGB(60, 0, 0)
+	Frame.BorderSizePixel = 0
+	Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
+
+	local Label = Instance.new("TextLabel", Frame)
+	Label.Size = UDim2.new(0.4, -5, 1, 0)
+	Label.Position = UDim2.new(0, 5, 0, 0)
+	Label.BackgroundTransparency = 1
+	Label.Text = name
+	Label.TextColor3 = Color3.new(1, 1, 1)
+	Label.Font = Enum.Font.SourceSansBold
+	Label.TextSize = 18
+	Label.TextXAlignment = Enum.TextXAlignment.Left
+
+	local Box = Instance.new("TextBox", Frame)
+	Box.Size = UDim2.new(0.6, -10, 1, -10)
+	Box.Position = UDim2.new(0.4, 5, 0, 5)
+	Box.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
+	Box.Text = ""
+	Box.PlaceholderText = placeholder or "Digite aqui..."
+	Box.TextColor3 = Color3.new(1, 1, 1)
+	Box.Font = Enum.Font.SourceSans
+	Box.TextSize = 18
+	Box.BorderSizePixel = 0
+	Instance.new("UICorner", Box).CornerRadius = UDim.new(0, 8)
+
+	Box.FocusLost:Connect(function(enterPressed)
+		if enterPressed then
+			pcall(callback, Box.Text)
+		end
+	end)
+end
+
 local function AddSection(name)
 	local Section = Instance.new("TextLabel", TabContent)
 	Section.Size = UDim2.new(1, -10, 0, 25)
@@ -290,6 +331,11 @@ task.wait(0.4)
 MainFrame.Visible = false
 end)
 
+local regrasTab = createTab("regras")
+
+regrasTab.AddSection("não xingar nenhum admin")
+
+regrasTab.AddSection("foi isso mesmo")
 
 
 -- // Exemplo de uso:
@@ -482,7 +528,8 @@ end
 
 end
 
---== BOTÕES E TOGGLES ==--
+
+
 HomerTab.AddButton("kill all / mata todos", killAll)
 
 HomerTab.AddButton("kill Random / mata aleatorio", killRandom)
@@ -625,7 +672,7 @@ end)
 
 end)
 
-BartTab.AddButton("Safe Zone", function()
+BartTab.AddButton("área salva / Safe Zone", function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -633,7 +680,7 @@ LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 104, -10)
 end
 end)
 
-BartTab.AddToggle("Float", false, function(state)
+BartTab.AddToggle("voar/ Float", false, function(state)
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
@@ -1389,6 +1436,34 @@ LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 104, -10)
 end
 end)
 
+-- script create BY ghost
+
+
+local savedPosition = nil
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+function salvarPosicao()
+	local char = LocalPlayer.Character
+	if char and char:FindFirstChild("HumanoidRootPart") then
+		savedPosition = char.HumanoidRootPart.Position
+		notify("System", "salved", 5)
+		print("Posição salva:", savedPosition)
+	end
+end
+
+function tpPosicaoSalva()
+	if savedPosition and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+		LocalPlayer.Character:MoveTo(savedPosition)
+		notify("System", "teleportado", 5)
+	else
+		print("Nenhuma posição salva ou personagem inválido.")
+	end
+end
+
+TpTab.AddButton("Salvar posição", salvarPosicao)
+TpTab.AddButton("Teleportar para posição salva", tpPosicaoSalva)
+
 TpTab.AddButton("Tp to an Bart", function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -1427,6 +1502,34 @@ TpTab.AddButton("Tp to an Homer", function()
             end
         end
     end
+end)
+
+TpTab.AddButton("spoot Simpsons", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(47, -60, -97))
+end
+end)
+
+TpTab.AddButton("spoot Simpsons", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(73, -80, -1))
+end
+end)
+
+TpTab.AddButton("spoot island bar", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(-48, -114, -42))
+end
+end)
+
+TpTab.AddButton("spoot Island bar", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(54, -55, -57))
+end
 end)
 
 local ConfigTab = createTab("Config")
