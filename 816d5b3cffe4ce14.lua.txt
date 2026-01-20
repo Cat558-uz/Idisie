@@ -781,6 +781,12 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FLY-V9-BY-K
 
 end)
 
+BartTab.AddButton("ALL Skins  Hub onionware", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/UPD-You-VS-Homer-Onionware-84957"))()
+
+end)
+
 BartTab.AddButton("Make Sound Obby ALL", function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
