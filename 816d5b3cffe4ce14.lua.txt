@@ -1,104 +1,123 @@
 -- script create BY ghost
 
--- script create BY ghost
-
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 
---== SISTEMA DE NOTIFICAÇÕES MOBILE EMPILHÁVEIS ==--
+--== SISTEMA DE NOTIFICAÇÕES MOBILE EMPILHÁVEIS COM SOM ==--
 local function notify(title, text, duration)
-duration = duration or 2
-local mainGui = PlayerGui:FindFirstChild("GhostNotifications")
-if not mainGui then
-mainGui = Instance.new("ScreenGui")
-mainGui.Name = "GhostNotifications"
-mainGui.ResetOnSpawn = false
-mainGui.IgnoreGuiInset = true
-mainGui.Parent = PlayerGui
-end
-
-local container = mainGui:FindFirstChild("Container")
-if not container then
-	container = Instance.new("Frame", mainGui)
-	container.Name = "Container"
-	container.Size = UDim2.new(0, 270, 0.5, 0)
-	container.Position = UDim2.new(1, -280, 0.45, 0)
-	container.BackgroundTransparency = 1
-
-	local layout = Instance.new("UIListLayout", container)
-	layout.SortOrder = Enum.SortOrder.LayoutOrder
-	layout.Padding = UDim.new(0, 2)
-	layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
-end
-
-local frame = Instance.new("Frame")
-frame.Name = "Notification"
-frame.Size = UDim2.new(1, 0, 0, 65)
-frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-frame.BackgroundTransparency = 0.15
-frame.BorderSizePixel = 0
-frame.ClipsDescendants = true
-frame.Parent = container
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
-
-local titleLabel = Instance.new("TextLabel", frame)
-titleLabel.Size = UDim2.new(1, -20, 0, 20)
-titleLabel.Position = UDim2.new(0, 10, 0, 5)
-titleLabel.Text = title
-titleLabel.TextColor3 = Color3.new(1, 1, 1)
-titleLabel.Font = Enum.Font.GothamBold
-titleLabel.TextSize = 17
-titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-titleLabel.BackgroundTransparency = 1
-
-local textLabel = Instance.new("TextLabel", frame)
-textLabel.Size = UDim2.new(1, -20, 0, 25)
-textLabel.Position = UDim2.new(0, 10, 0, 27)
-textLabel.Text = text
-textLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
-textLabel.Font = Enum.Font.Gotham
-textLabel.TextSize = 15
-textLabel.TextWrapped = true
-textLabel.TextXAlignment = Enum.TextXAlignment.Left
-textLabel.BackgroundTransparency = 1
-
-local timeLabel = Instance.new("TextLabel", frame)
-timeLabel.Size = UDim2.new(1, -10, 0, 15)
-timeLabel.Position = UDim2.new(0, 0, 1, -15)
-timeLabel.Text = "(" .. duration .. "s)"
-timeLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
-timeLabel.Font = Enum.Font.Code
-timeLabel.TextSize = 13
-timeLabel.TextXAlignment = Enum.TextXAlignment.Right
-timeLabel.BackgroundTransparency = 1
-
-frame.Position = UDim2.new(1, 280, 0, 0)
-TweenService:Create(frame, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0, 0, 0, 0)}):Play()
-
-task.spawn(function()
-	local start = tick()
-	while tick() - start < duration and frame.Parent do
-		local remaining = math.ceil(duration - (tick() - start))
-		timeLabel.Text = "(" .. remaining .. "s)"
-		RunService.RenderStepped:Wait()
+	duration = duration or 2
+	local mainGui = PlayerGui:FindFirstChild("GhostNotifications")
+	if not mainGui then
+		mainGui = Instance.new("ScreenGui")
+		mainGui.Name = "GhostNotifications"
+		mainGui.ResetOnSpawn = false
+		mainGui.IgnoreGuiInset = true
+		mainGui.Parent = PlayerGui
 	end
-end)
 
-task.delay(duration, function()
-	if frame and frame.Parent then
-		local tweenOut = TweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Position = UDim2.new(1, 280, 0, 0)})
-		tweenOut:Play()
-		tweenOut.Completed:Wait()
-		frame:Destroy()
+	local container = mainGui:FindFirstChild("Container")
+	if not container then
+		container = Instance.new("Frame", mainGui)
+		container.Name = "Container"
+		container.Size = UDim2.new(0, 270, 0.5, 0)
+		container.Position = UDim2.new(1, -280, 0.45, 0)
+		container.BackgroundTransparency = 1
+
+		local layout = Instance.new("UIListLayout", container)
+		layout.SortOrder = Enum.SortOrder.LayoutOrder
+		layout.Padding = UDim.new(0, 3)
+		layout.VerticalAlignment = Enum.VerticalAlignment.Bottom
 	end
-end)
 
+	local frame = Instance.new("Frame")
+	frame.Name = "Notification"
+	frame.Size = UDim2.new(1, 0, 0, 65)
+	frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+	frame.BackgroundTransparency = 0.25
+	frame.BorderSizePixel = 0
+	frame.ClipsDescendants = true
+	frame.Parent = container
+	Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
+
+	local stroke = Instance.new("UIStroke", frame)
+	stroke.Thickness = 1.3
+	stroke.Color = Color3.fromRGB(80, 80, 80)
+
+	local titleLabel = Instance.new("TextLabel", frame)
+	titleLabel.Size = UDim2.new(1, -20, 0, 20)
+	titleLabel.Position = UDim2.new(0, 10, 0, 5)
+	titleLabel.Text = title
+	titleLabel.TextColor3 = Color3.new(1, 1, 1)
+	titleLabel.Font = Enum.Font.GothamBold
+	titleLabel.TextSize = 17
+	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+	titleLabel.BackgroundTransparency = 1
+
+	local textLabel = Instance.new("TextLabel", frame)
+	textLabel.Size = UDim2.new(1, -20, 0, 25)
+	textLabel.Position = UDim2.new(0, 10, 0, 27)
+	textLabel.Text = text
+	textLabel.TextColor3 = Color3.fromRGB(220, 220, 220)
+	textLabel.Font = Enum.Font.Gotham
+	textLabel.TextSize = 15
+	textLabel.TextWrapped = true
+	textLabel.TextXAlignment = Enum.TextXAlignment.Left
+	textLabel.BackgroundTransparency = 1
+
+	local timeLabel = Instance.new("TextLabel", frame)
+	timeLabel.Size = UDim2.new(1, -10, 0, 15)
+	timeLabel.Position = UDim2.new(0, 0, 1, -15)
+	timeLabel.Text = "(" .. duration .. "s)"
+	timeLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
+	timeLabel.Font = Enum.Font.Code
+	timeLabel.TextSize = 13
+	timeLabel.TextXAlignment = Enum.TextXAlignment.Right
+	timeLabel.BackgroundTransparency = 1
+
+	--== SOM DA NOTIFICAÇÃO ==--
+	local sound = Instance.new("Sound", frame)
+	sound.SoundId = "rbxassetid://18595195017"
+	sound.Volume = 1
+	sound.PlayOnRemove = true
+	sound:Destroy() -- tocará instantaneamente ao remover
+
+	--== ANIMAÇÃO DE ENTRADA ==--
+	frame.Position = UDim2.new(1, 280, 0, 0)
+	frame.BackgroundTransparency = 1
+	TweenService:Create(frame, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+		Position = UDim2.new(0, 0, 0, 0),
+		BackgroundTransparency = 0.25
+	}):Play()
+
+	task.spawn(function()
+		local start = tick()
+		while tick() - start < duration and frame.Parent do
+			local remaining = math.ceil(duration - (tick() - start))
+			timeLabel.Text = "(" .. remaining .. "s)"
+			RunService.RenderStepped:Wait()
+		end
+	end)
+
+	--== SAÍDA AUTOMÁTICA ==--
+	task.delay(duration, function()
+		if frame and frame.Parent then
+			local tweenOut = TweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+				Position = UDim2.new(1, 280, 0, 0),
+				BackgroundTransparency = 1
+			})
+			tweenOut:Play()
+			tweenOut.Completed:Wait()
+			frame:Destroy()
+		end
+	end)
 end
 
-notify("System", "em pt Brasil mais não completo♥️", 5)
+
+
+notify("System", "update nova Tab Scripts De uma olhada!", 5)
 
 --== INTERFACE HAVENS SCRIPT ==--
 
@@ -333,6 +352,8 @@ end)
 
 local regrasTab = createTab("regras")
 
+regrasTab.AddSection("REGRAS APLICAMENTO DE BAN")
+
 regrasTab.AddSection("não xingar nenhum admin")
 
 regrasTab.AddSection("foi isso mesmo")
@@ -542,7 +563,7 @@ end
 end
 
 myChar.Torso.CFrame = oldPos
-notify("System","All enemies attacked, DOMER.")
+notify("System","sucess")
 
 end
 
@@ -571,13 +592,74 @@ end
 
 end
 
+-- Script by Ghost (R6 - Homer Pulls com cooldown e proteção completa)
 
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local homerPushActive = false
+local cooldowns = {}
+
+-- Empurra VOCÊ pra longe do Homer
+local function pushAwayFrom(target)
+	local myChar = LocalPlayer.Character
+	if myChar and myChar:FindFirstChild("Torso") and target and target:FindFirstChild("Torso") then
+		local myTorso = myChar.Torso
+		local dir = (myTorso.Position - target.Torso.Position).Unit
+		local bv = Instance.new("BodyVelocity")
+		bv.Velocity = dir * 80
+		bv.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+		bv.Parent = myTorso
+		game.Debris:AddItem(bv, 0.2)
+	end
+end
+
+-- Loop principal
+RunService.Heartbeat:Connect(function()
+	if homerPushActive then
+		local myChar = LocalPlayer.Character
+		if myChar and myChar:FindFirstChild("Torso") then
+			local myTorso = myChar.Torso
+			for _, player in pairs(Players:GetPlayers()) do
+				if player ~= LocalPlayer and player.Team and player.Team.Name == "Homer" then
+					local char = player.Character
+					if char and char:FindFirstChild("Torso") then
+						local torso = char.Torso
+						local dist = (myTorso.Position - torso.Position).Magnitude
+						if dist <= 10 then
+							if not cooldowns[player] or tick() - cooldowns[player] >= 1 then
+								pushAwayFrom(char)
+								cooldowns[player] = tick()
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end)
+
+-- Remover cooldown se player sair
+Players.PlayerRemoving:Connect(function(p)
+	cooldowns[p] = nil
+end)
+
+-- Resetar tudo ao morrer
+LocalPlayer.CharacterAdded:Connect(function()
+	task.wait(0.1)
+	cooldowns = {}
+end)
+
+-- Toggle na aba Homer
+HomerTab.AddToggle("Homer Pulls / empurra o Homer", false, function(v)
+	homerPushActive = v
+end)
 
 HomerTab.AddButton("kill all / mata todos", killAll)
 
 HomerTab.AddButton("kill Random / mata aleatorio", killRandom)
 
-HomerTab.AddToggle("kill / mata automatico", false, function(val)
+HomerTab.AddToggle("kill auto / mata automatico", false, function(val)
 autoKill = val
 if val then autoKillLoop() end
 end)
@@ -587,6 +669,9 @@ espActive = val
 end)
 
 HomerTab.AddButton("Fake Ritual / ritual falso (Use the Homer)", function()
+
+notify("System", "wait!!", 1)
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local TextChatService = game:GetService("TextChatService")
@@ -765,27 +850,7 @@ end)
 
 BartTab.AddSection("Spaming / bypass")
 
-BartTab.AddButton("wall Hop Hub and ant cheat", function()
 
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
-wait(0.1)
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-Hub-81098"))()
-
-end)
-
-BartTab.AddButton("fly script and ant cheat", function()
-
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
-wait(0.1)
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FLY-V9-BY-KIRO-In-black-and-white-59302"))()
-
-end)
-
-BartTab.AddButton("ALL Skins  Hub onionware", function()
-
-loadstring(game:HttpGet("https://rawscripts.net/raw/UPD-You-VS-Homer-Onionware-84957"))()
-
-end)
 
 BartTab.AddButton("Make Sound Obby ALL", function()
 local Players = game:GetService("Players")
@@ -1590,13 +1655,44 @@ ConfigTab.AddSection("system")
 ConfigTab.AddButton("View FPS", function()
 local RunService = game:GetService("RunService")
 local fps = math.floor(1 / RunService.RenderStepped:Wait())
-notify("System", "FPS Atual: " .. fps, 3)
+notify("System", "FPS: " .. fps, 3)
 end)
+
 
 
 
 ConfigTab.AddButton("destroy GUI", function() ScreenGui:Destroy() end)
 
+
+local ScriptTab = createTab("Script")
+
+ScriptTab.AddButton("wall Hop Hub and ant cheat", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+wait(0.1)
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-Hub-81098"))()
+
+end)
+
+ScriptTab.AddButton("fly script and ant cheat", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+wait(0.1)
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FLY-V9-BY-KIRO-In-black-and-white-59302"))()
+
+end)
+
+ScriptTab.AddButton("ALL Skins  Hub onionware", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/UPD-You-VS-Homer-Onionware-84957"))()
+
+end)
+
+ScriptTab.AddButton("bartender good", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/You-VS-Homer-Bartender-78034"))()
+
+end)
 
 
 
