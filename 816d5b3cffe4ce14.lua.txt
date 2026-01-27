@@ -117,7 +117,7 @@ end
 
 
 
-notify("System", "update nova Tab Scripts De uma olhada!", 5)
+notify("System", "update Nova", 5)
 
 --== INTERFACE HAVENS SCRIPT ==--
 
@@ -350,13 +350,13 @@ task.wait(0.4)
 MainFrame.Visible = false
 end)
 
-local regrasTab = createTab("regras")
+local regrasTab = createTab("Rules")
 
 regrasTab.AddSection("REGRAS APLICAMENTO DE BAN")
 
-regrasTab.AddSection("não xingar nenhum admin")
+regrasTab.AddSection("não xingar os criadores do script")
 
-regrasTab.AddSection("foi isso mesmo")
+regrasTab.AddSection("respeitar criadores do script")
 
 
 -- // Exemplo de uso:
@@ -423,6 +423,65 @@ TeleportService:Teleport(game.PlaceId)
 end)
 
 local HomerTab = createTab("Homer")
+
+
+--// VIEW HITBOX ALL PLAYERS (AUTO UPDATE)
+local Players = game:GetService("Players")
+
+local viewBodyActive = false
+local highlights = {}
+
+local function createHighlight(part)
+    local highlight = Instance.new("BoxHandleAdornment")
+    highlight.Adornee = part
+    highlight.Color3 = Color3.new(1, 1, 0)
+    highlight.Transparency = 0.8
+    highlight.AlwaysOnTop = true
+    highlight.ZIndex = 10
+    highlight.Size = part.Size + Vector3.new(0.1, 0.1, 0.1)
+    highlight.Parent = part
+    return highlight
+end
+
+local function applyHighlightsToCharacter(character)
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") and not highlights[part] then
+            local h = createHighlight(part)
+            highlights[part] = h
+        end
+    end
+end
+
+local function enableLoop()
+    task.spawn(function()
+        while viewBodyActive do
+            for _, player in ipairs(Players:GetPlayers()) do
+                if player.Character then
+                    applyHighlightsToCharacter(player.Character)
+                end
+            end
+            task.wait(1)
+        end
+    end)
+end
+
+local function disableAllHighlights()
+    for part, h in pairs(highlights) do
+        if h and h.Parent then
+            h:Destroy()
+        end
+    end
+    highlights = {}
+end
+
+HomerTab.AddToggle("View Hitbox Players", false, function(state)
+    viewBodyActive = state
+    if state then
+        enableLoop()
+    else
+        disableAllHighlights()
+    end
+end)
 
 
 local Players = game:GetService("Players")
@@ -651,17 +710,8 @@ LocalPlayer.CharacterAdded:Connect(function()
 end)
 
 -- Toggle na aba Homer
-HomerTab.AddToggle("Homer Pulls / empurra o Homer", false, function(v)
+HomerTab.AddToggle("Homer Pulls / ant Homer ", false, function(v)
 	homerPushActive = v
-end)
-
-HomerTab.AddButton("kill all / mata todos", killAll)
-
-HomerTab.AddButton("kill Random / mata aleatorio", killRandom)
-
-HomerTab.AddToggle("kill auto / mata automatico", false, function(val)
-autoKill = val
-if val then autoKillLoop() end
 end)
 
 HomerTab.AddToggle("ver todos / esp / Fix", true, function(val)
@@ -749,7 +799,100 @@ HomerTab.AddToggle("X Ray", false, function(state)
     end)
 end)
 
+HomerTab.AddSection("Attac / Ataque")
+
+HomerTab.AddButton("kill all / mata todos", killAll)
+
+HomerTab.AddButton("kill Random / mata aleatorio", killRandom)
+
+HomerTab.AddToggle("kill auto / mata automatico", false, function(val)
+autoKill = val
+if val then autoKillLoop() end
+end)
+
+
+
 local BartTab = createTab("Bart")
+
+BartTab.AddButton("dash // ir para frente", function()
+
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+
+wait(1)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+
+-- GUI principal
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "GhostDashGui"
+ScreenGui.Parent = game.CoreGui
+
+-- Botão circular
+local DashButton = Instance.new("TextButton")
+DashButton.Size = UDim2.new(0, 60, 0, 60)
+DashButton.Position = UDim2.new(0.5, -30, 0.8, 0)
+DashButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+DashButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+DashButton.Text = "Dash"
+DashButton.Font = Enum.Font.GothamBold
+DashButton.TextSize = 16
+DashButton.AutoButtonColor = true
+DashButton.Active = true
+DashButton.Draggable = true
+DashButton.BorderSizePixel = 0
+DashButton.Parent = ScreenGui
+
+-- Borda arredondada
+local UICorner = Instance.new("UICorner", DashButton)
+UICorner.CornerRadius = UDim.new(1, 0)
+
+-- Efeito visual
+local UIStroke = Instance.new("UIStroke", DashButton)
+UIStroke.Thickness = 0.3
+UIStroke.Color = Color3.fromRGB(255, 255, 255)
+UIStroke.Transparency = 0.2
+
+-- Pré-cria tweens para eficiência
+local TweenDashOn = TweenInfo.new(0.1)
+local TweenDashOff = TweenInfo.new(0.2)
+
+-- Função de dash
+DashButton.MouseButton1Click:Connect(function()
+	local char = LocalPlayer.Character
+	if not char or not char:FindFirstChild("Torso") then return end
+	local root = char.Torso
+
+	-- Evita spam
+	if root:FindFirstChild("Dashing") then return end
+	local tag = Instance.new("BoolValue", root)
+	tag.Name = "Dashing"
+
+	-- Efeito visual
+	TweenService:Create(DashButton, TweenDashOn, {BackgroundColor3 = Color3.fromRGB(0, 170, 255)}):Play()
+	DashButton.Text = ">>>"
+
+	-- Impulso suave
+	local attachment = Instance.new("Attachment", root)
+	local lv = Instance.new("LinearVelocity")
+	lv.MaxForce = math.huge
+	lv.VectorVelocity = root.CFrame.LookVector * 90
+	lv.Attachment0 = attachment
+	lv.Parent = root
+
+	task.wait(0.5)
+	lv:Destroy()
+	attachment:Destroy()
+	tag:Destroy()
+
+	-- Volta ao normal
+	DashButton.Text = "Dash"
+	TweenService:Create(DashButton, TweenDashOff, {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}):Play()
+end)
+
+
+end)
 
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
@@ -848,6 +991,47 @@ end
 
 end)
 
+BartTab.AddToggle("Full Bright", false, function(state)
+local Lighting = game:GetService("Lighting")
+local active = state
+
+-- Salva as configurações originais antes de ativar
+local originalSettings = {
+Brightness = Lighting.Brightness,
+ClockTime = Lighting.ClockTime,
+FogEnd = Lighting.FogEnd,
+GlobalShadows = Lighting.GlobalShadows,
+OutdoorAmbient = Lighting.OutdoorAmbient
+}
+
+if active then
+task.spawn(function()
+while active do
+pcall(function()
+Lighting.Brightness = 2
+Lighting.ClockTime = 14
+Lighting.FogEnd = 1e6
+Lighting.GlobalShadows = false
+Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+end)
+task.wait(0.5)
+end
+end)
+else
+-- Restaura valores originais
+pcall(function()
+Lighting.Brightness = originalSettings.Brightness
+Lighting.ClockTime = originalSettings.ClockTime
+Lighting.FogEnd = originalSettings.FogEnd
+Lighting.GlobalShadows = originalSettings.GlobalShadows
+Lighting.OutdoorAmbient = originalSettings.OutdoorAmbient
+end)
+end
+
+end)
+
+
+
 BartTab.AddSection("Spaming / bypass")
 
 
@@ -940,44 +1124,6 @@ end
 
 end)
 
-BartTab.AddToggle("Full Bright", false, function(state)
-local Lighting = game:GetService("Lighting")
-local active = state
-
--- Salva as configurações originais antes de ativar
-local originalSettings = {
-    Brightness = Lighting.Brightness,
-    ClockTime = Lighting.ClockTime,
-    FogEnd = Lighting.FogEnd,
-    GlobalShadows = Lighting.GlobalShadows,
-    OutdoorAmbient = Lighting.OutdoorAmbient
-}
-
-if active then
-    task.spawn(function()
-        while active do
-            pcall(function()
-                Lighting.Brightness = 2
-                Lighting.ClockTime = 14
-                Lighting.FogEnd = 1e6
-                Lighting.GlobalShadows = false
-                Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
-            end)
-            task.wait(0.5)
-        end
-    end)
-else
-    -- Restaura valores originais
-    pcall(function()
-        Lighting.Brightness = originalSettings.Brightness
-        Lighting.ClockTime = originalSettings.ClockTime
-        Lighting.FogEnd = originalSettings.FogEnd
-        Lighting.GlobalShadows = originalSettings.GlobalShadows
-        Lighting.OutdoorAmbient = originalSettings.OutdoorAmbient
-    end)
-end
-
-end)
 
 BartTab.AddSection("game States")
 
@@ -1693,7 +1839,6 @@ ScriptTab.AddButton("bartender good", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/You-VS-Homer-Bartender-78034"))()
 
 end)
-
 
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/heads/main/520dffc3274a9d5e.lua.txt", true))()
