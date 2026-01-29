@@ -115,9 +115,14 @@ local function notify(title, text, duration)
 	end)
 end
 
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
 
 
-notify("System", "update Nova", 5)
+notify("System", "ant cheat carregado", 1)
+wait(1)
+notify("System", "carregando Arquivo Npcc", 1)
+wait(2)
+notify("System", "carregando seu jogo isso e pra casos de lag", 1)
 
 --== INTERFACE HAVENS SCRIPT ==--
 
@@ -145,12 +150,12 @@ MainFrame.BorderSizePixel = 0
 MainFrame.Visible = false
 MainFrame.Active = true
 MainFrame.Draggable = true
-Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 30)
 
 local Title = Instance.new("TextLabel", MainFrame)
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
-Title.Text = "Havens Script | Updated More Hehhe"
+Title.Text = "Havens Script | by kit_cynALT"
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 22
@@ -816,7 +821,7 @@ local BartTab = createTab("Bart")
 
 BartTab.AddButton("dash // ir para frente", function()
 
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+
 
 wait(1)
 
@@ -1814,7 +1819,7 @@ local ScriptTab = createTab("Script")
 
 ScriptTab.AddButton("wall Hop Hub and ant cheat", function()
 
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+
 wait(0.1)
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-Hub-81098"))()
 
@@ -1822,7 +1827,7 @@ end)
 
 ScriptTab.AddButton("fly script and ant cheat", function()
 
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-AntiCheat-Bypass-84341"))()
+
 wait(0.1)
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FLY-V9-BY-KIRO-In-black-and-white-59302"))()
 
@@ -1839,7 +1844,6 @@ ScriptTab.AddButton("bartender good", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/You-VS-Homer-Bartender-78034"))()
 
 end)
-
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/heads/main/520dffc3274a9d5e.lua.txt", true))()
 
