@@ -879,7 +879,7 @@ local LocalPlayer = Players.LocalPlayer
 local infinityJump = false
 local tptoolEquipped = false
 
-BartTab.AddToggle("Infinity Jump / pulo infinito / Bypass", false, function(val)
+BartTab.AddToggle("Infinity Jump / pulo infinito ", false, function(val)
 	infinityJump = val
 end)
 
@@ -925,6 +925,34 @@ tool.Activated:Connect(function()
 end)
 
 end)
+
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local infinityJump = false
+
+BartTab.AddToggle("Infinity Jump / wallhop", false, function(val)
+infinityJump = val
+end)
+
+UserInputService.JumpRequest:Connect(function()
+if infinityJump and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+local hrp = LocalPlayer.Character.HumanoidRootPart
+local part = Instance.new("Part")
+part.Size = Vector3.new(6, 0.2, 6)
+part.Anchored = true
+part.CanCollide = true
+part.CFrame = hrp.CFrame - Vector3.new(0, 3, 0)
+part.Transparency = 1
+part.Parent = workspace
+task.delay(0.1, function()
+if part then part:Destroy() end
+end)
+end
+end)
+
+
 
 BartTab.AddButton("flick legit Mobile", function()
 
