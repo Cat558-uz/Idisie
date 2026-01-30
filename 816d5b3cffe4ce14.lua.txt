@@ -926,7 +926,100 @@ end)
 
 end)
 
-BartTab.AddButton("área salva / Safe Zone", function()
+BartTab.AddButton("flick legit Mobile", function()
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+local Camera = workspace.CurrentCamera
+
+-- GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "FlickGui"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = PlayerGui
+
+-- Botão Flick estilizado
+local Button = Instance.new("TextButton")
+Button.Name = "FlickButton"
+Button.Size = UDim2.new(0, 120, 0, 45)
+Button.Position = UDim2.new(0.5, -60, 0.8, 0)
+Button.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+Button.BorderSizePixel = 0
+Button.Text = "FLICK"
+Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button.Font = Enum.Font.GothamBold
+Button.TextSize = 22
+Button.AutoButtonColor = false
+Button.Parent = ScreenGui
+
+-- Efeito hover visual
+Button.MouseEnter:Connect(function()
+	Button.BackgroundColor3 = Color3.fromRGB(255, 70, 70)
+end)
+Button.MouseLeave:Connect(function()
+	Button.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+end)
+
+-- Bordas arredondadas
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = Button
+
+-- Sombra
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Thickness = 0.5
+UIStroke.Color = Color3.fromRGB(255, 255, 255)
+UIStroke.Parent = Button
+
+-- Arrastar
+local dragging, dragInput, dragStart, startPos
+Button.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = Button.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+Button.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		local delta = input.Position - dragStart
+		Button.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+-- Flick leve
+Button.MouseButton1Click:Connect(function()
+	local hrp = Player.Character and Player.Character:FindFirstChild("HumanoidRootPart")
+	if not hrp then return end
+	
+	local cam = workspace.CurrentCamera
+	local original = cam.CFrame
+
+	cam.CameraType = Enum.CameraType.Scriptable
+	cam.CFrame = original * CFrame.Angles(0, math.rad(30), 0)
+	task.wait(0.02)
+	cam.CFrame = original
+	cam.CameraType = Enum.CameraType.Custom
+end)
+
+end)
+
+BartTab.AddButton("area Segura / Safe Zone", function()
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -1914,11 +2007,9 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/You-VS-Homer-Bartender-78034
 
 end)
 
-local sugestaoTab = createTab("sugestao")
+local sugestaoTab = createTab("sugestions")
 
-sugestaoTab.AddSection("No Rason gets ban From script")
 
-sugestaoTab.AddSection("enviar sem motivo da ban no script")
 
 sugestaoTab.AddButton("carregar sugestao ", function()
 
