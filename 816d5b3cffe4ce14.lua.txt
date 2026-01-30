@@ -120,9 +120,9 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-Anti
 
 notify("System", "ant cheat carregado", 1)
 wait(1)
-notify("System", "carregando Arquivo Npcc", 4)
+notify("System", "carregando Arquivo Npcc", 1)
 wait(1)
-notify("System", "carregando seu jogo isso e pra casos de lag", 4)
+notify("System", "quase la..", 1)
 
 --== INTERFACE HAVENS SCRIPT ==--
 
@@ -1916,7 +1916,11 @@ end)
 
 local sugestaoTab = createTab("sugestao")
 
-ScriptTab.AddButton("carrega painel para enviar sugestão eu estou lendo todas!", function()
+sugestaoTab.AddSection("No Rason gets ban From script")
+
+sugestaoTab.AddSection("enviar sem motivo da ban no script")
+
+sugestaoTab.AddButton("carregar sugestao ", function()
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Ed-Sugestion/refs/heads/main/sugestao.lua.obfuscated.lua.txt"))()
 
