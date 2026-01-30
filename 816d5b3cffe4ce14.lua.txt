@@ -1928,3 +1928,5 @@ end)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/heads/main/520dffc3274a9d5e.lua.txt", true))()
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Wish/refs/heads/main/Iidj", true))()
+
