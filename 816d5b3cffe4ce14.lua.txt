@@ -120,9 +120,9 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Simple-Anti
 
 notify("System", "ant cheat carregado", 1)
 wait(1)
-notify("System", "carregando Arquivo Npcc", 1)
-wait(2)
-notify("System", "carregando seu jogo isso e pra casos de lag", 1)
+notify("System", "carregando Arquivo Npcc", 4)
+wait(1)
+notify("System", "carregando seu jogo isso e pra casos de lag", 4)
 
 --== INTERFACE HAVENS SCRIPT ==--
 
@@ -133,14 +133,14 @@ local OpenButton = Instance.new("TextButton", ScreenGui)
 OpenButton.Size = UDim2.new(0, 120, 0, 40)
 OpenButton.Position = UDim2.new(0, 20, 0.5, -20)
 OpenButton.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
-OpenButton.Text = "abrir Hub"
+OpenButton.Text = ". open hub ."
 OpenButton.TextColor3 = Color3.new(1, 1, 1)
 OpenButton.Font = Enum.Font.SourceSansBold
 OpenButton.TextSize = 22
-OpenButton.BorderSizePixel = 0
+OpenButton.BorderSizePixel = 1
 OpenButton.Active = true
 OpenButton.Draggable = true
-Instance.new("UICorner", OpenButton).CornerRadius = UDim.new(0, 8)
+Instance.new("UICorner", OpenButton).CornerRadius = UDim.new(0, 15)
 
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.Size = UDim2.new(0, 450, 0, 300)
@@ -155,7 +155,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 30)
 local Title = Instance.new("TextLabel", MainFrame)
 Title.Size = UDim2.new(1, 0, 0, 35)
 Title.BackgroundColor3 = Color3.fromRGB(120, 0, 0)
-Title.Text = "Havens Script | by kit_cynALT"
+Title.Text = "Havens Script | you vs homer"
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 22
@@ -166,7 +166,7 @@ local CloseButton = Instance.new("TextButton", Title)
 CloseButton.Size = UDim2.new(0, 60, 0, 30)
 CloseButton.Position = UDim2.new(1, -65, 0, 3)
 CloseButton.BackgroundColor3 = Color3.fromRGB(90, 0, 0)
-CloseButton.Text = "Close"
+CloseButton.Text = "fechar"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.Font = Enum.Font.SourceSansBold
 CloseButton.TextSize = 18
@@ -237,43 +237,6 @@ TabButton.MouseButton1Click:Connect(function()
 	TabContent.Visible = true
 end)
 
---== Função para adicionar TextBox ==--
-local function AddTextbox(name, placeholder, callback)
-	local Frame = Instance.new("Frame", ContentFrame)
-	Frame.Size = UDim2.new(1, -10, 0, 40)
-	Frame.BackgroundColor3 = Color3.fromRGB(60, 0, 0)
-	Frame.BorderSizePixel = 0
-	Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 8)
-
-	local Label = Instance.new("TextLabel", Frame)
-	Label.Size = UDim2.new(0.4, -5, 1, 0)
-	Label.Position = UDim2.new(0, 5, 0, 0)
-	Label.BackgroundTransparency = 1
-	Label.Text = name
-	Label.TextColor3 = Color3.new(1, 1, 1)
-	Label.Font = Enum.Font.SourceSansBold
-	Label.TextSize = 18
-	Label.TextXAlignment = Enum.TextXAlignment.Left
-
-	local Box = Instance.new("TextBox", Frame)
-	Box.Size = UDim2.new(0.6, -10, 1, -10)
-	Box.Position = UDim2.new(0.4, 5, 0, 5)
-	Box.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-	Box.Text = ""
-	Box.PlaceholderText = placeholder or "Digite aqui..."
-	Box.TextColor3 = Color3.new(1, 1, 1)
-	Box.Font = Enum.Font.SourceSans
-	Box.TextSize = 18
-	Box.BorderSizePixel = 0
-	Instance.new("UICorner", Box).CornerRadius = UDim.new(0, 8)
-
-	Box.FocusLost:Connect(function(enterPressed)
-		if enterPressed then
-			pcall(callback, Box.Text)
-		end
-	end)
-end
-
 local function AddSection(name)
 	local Section = Instance.new("TextLabel", TabContent)
 	Section.Size = UDim2.new(1, -10, 0, 25)
@@ -283,7 +246,7 @@ local function AddSection(name)
 	Section.Font = Enum.Font.SourceSansBold
 	Section.TextSize = 18
 	Section.TextXAlignment = Enum.TextXAlignment.Left
-	Section.BorderSizePixel = 0
+	Section.BorderSizePixel = 1
 	Instance.new("UICorner", Section).CornerRadius = UDim.new(0, 8)
 end
 
@@ -355,15 +318,6 @@ task.wait(0.4)
 MainFrame.Visible = false
 end)
 
-local regrasTab = createTab("Rules")
-
-regrasTab.AddSection("REGRAS APLICAMENTO DE BAN")
-
-regrasTab.AddSection("não xingar os criadores do script")
-
-regrasTab.AddSection("respeitar criadores do script")
-
-
 -- // Exemplo de uso:
 local ServerTab = createTab("Server")
 
@@ -395,6 +349,8 @@ Players.PlayerAdded:Connect(function(p)
 	end)
 end)
 
+
+
 -- remove any leaderboard-like GUI locally
 local function destroyGuiIfLeaderboard(g)
 	if not g or not g.Name then return end
@@ -425,6 +381,24 @@ end)
 ServerTab.AddButton("Rejoin", function()
 local TeleportService = game:GetService("TeleportService")
 TeleportService:Teleport(game.PlaceId)
+end)
+
+ServerTab.AddButton("remove Foxy Jumpscare", function()
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local miscFolder = ReplicatedStorage:FindFirstChild("moduleFolders") and ReplicatedStorage.moduleFolders:FindFirstChild("misc")
+
+if miscFolder then
+    local foxyJumpscare = miscFolder:FindFirstChild("foxyJumpscare")
+    if foxyJumpscare then
+        local foxyjump = foxyJumpscare:FindFirstChild("foxyjump")
+        if foxyjump then
+            foxyjump:Destroy()
+        end
+        foxyJumpscare:Destroy()
+    end
+end
+
 end)
 
 local HomerTab = createTab("Homer")
@@ -651,7 +625,7 @@ local oldPos = myChar.Torso.CFrame
 myChar.Torso.CFrame = CFrame.new(target.Character.Torso.Position + Vector3.new(0,1,0))
 task.wait(0.2)
 myChar.Torso.CFrame = oldPos
-notify("System","Random player attacked, DOMER.")
+notify("System","Random player attacked.")
 end
 
 end
@@ -690,7 +664,7 @@ RunService.Heartbeat:Connect(function()
 					if char and char:FindFirstChild("Torso") then
 						local torso = char.Torso
 						local dist = (myTorso.Position - torso.Position).Magnitude
-						if dist <= 10 then
+						if dist <= 22 then
 							if not cooldowns[player] or tick() - cooldowns[player] >= 1 then
 								pushAwayFrom(char)
 								cooldowns[player] = tick()
@@ -819,11 +793,10 @@ end)
 
 local BartTab = createTab("Bart")
 
+
+
+
 BartTab.AddButton("dash // ir para frente", function()
-
-
-
-wait(1)
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -899,35 +872,40 @@ end)
 
 end)
 
-local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
 local infinityJump = false
 local tptoolEquipped = false
 
 BartTab.AddToggle("Infinity Jump / pulo infinito / Bypass", false, function(val)
-infinityJump = val
+	infinityJump = val
 end)
 
-UserInputService.JumpRequest:Connect(function()
-if infinityJump and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-local hrp = LocalPlayer.Character.HumanoidRootPart
-local part = Instance.new("Part")
-part.Size = Vector3.new(6, 0.2, 6)
-part.Anchored = true
-part.CanCollide = true
-part.CFrame = hrp.CFrame - Vector3.new(0, 3, 0)
-part.Transparency = 1
-part.Parent = workspace
-task.delay(0.1, function()
-if part then part:Destroy() end
-end)
+local function setupJump()
+	UserInputService.JumpRequest:Connect(function()
+		if infinityJump and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
+			LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+		end
+	end)
 end
+
+-- reconecta sempre que o player morrer ou respawnar
+LocalPlayer.CharacterAdded:Connect(function()
+	repeat task.wait() until LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+	setupJump()
 end)
+
+-- inicia o primeiro vínculo
+if LocalPlayer.Character then
+	setupJump()
+end
 
 BartTab.AddButton("Give TP Tool", function()
+
 notify("system", "bypass....")
+wait(1)
 notify("Sucesse", ".check your inventory")
 
 if tptoolEquipped then return end
@@ -996,48 +974,55 @@ end
 
 end)
 
-BartTab.AddToggle("Full Bright", false, function(state)
 local Lighting = game:GetService("Lighting")
-local active = state
+local active = false
+local originalSettings = nil -- Variável para guardar o estado original do mapa
 
--- Salva as configurações originais antes de ativar
-local originalSettings = {
-Brightness = Lighting.Brightness,
-ClockTime = Lighting.ClockTime,
-FogEnd = Lighting.FogEnd,
-GlobalShadows = Lighting.GlobalShadows,
-OutdoorAmbient = Lighting.OutdoorAmbient
-}
+BartTab.AddToggle("Full Bright", false, function(state)
+    active = state
 
-if active then
-task.spawn(function()
-while active do
-pcall(function()
-Lighting.Brightness = 2
-Lighting.ClockTime = 14
-Lighting.FogEnd = 1e6
-Lighting.GlobalShadows = false
-Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+    if active then
+        -- Só salva as configurações se for a primeira vez que liga
+        if not originalSettings then
+            originalSettings = {
+                Brightness = Lighting.Brightness,
+                ClockTime = Lighting.ClockTime,
+                FogEnd = Lighting.FogEnd,
+                GlobalShadows = Lighting.GlobalShadows,
+                OutdoorAmbient = Lighting.OutdoorAmbient
+            }
+        end
+
+        task.spawn(function()
+            while active do
+                pcall(function()
+                    Lighting.Brightness = 2
+                    Lighting.ClockTime = 14
+                    Lighting.FogEnd = 1e6
+                    Lighting.GlobalShadows = false
+                    Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+                end)
+                task.wait(0.5)
+            end
+        end)
+    else
+        -- Restaura os valores originais quando desativado
+        if originalSettings then
+            pcall(function()
+                Lighting.Brightness = originalSettings.Brightness
+                Lighting.ClockTime = originalSettings.ClockTime
+                Lighting.FogEnd = originalSettings.FogEnd
+                Lighting.GlobalShadows = originalSettings.GlobalShadows
+                Lighting.OutdoorAmbient = originalSettings.OutdoorAmbient
+            end)
+        end
+    end
 end)
-task.wait(0.5)
-end
-end)
-else
--- Restaura valores originais
-pcall(function()
-Lighting.Brightness = originalSettings.Brightness
-Lighting.ClockTime = originalSettings.ClockTime
-Lighting.FogEnd = originalSettings.FogEnd
-Lighting.GlobalShadows = originalSettings.GlobalShadows
-Lighting.OutdoorAmbient = originalSettings.OutdoorAmbient
-end)
-end
-
-end)
 
 
 
-BartTab.AddSection("Spaming / bypass")
+
+BartTab.AddSection("Troll / bypass")
 
 
 
@@ -1129,10 +1114,382 @@ end
 
 end)
 
+BartTab.AddButton("Make all machines ", function()
 
-BartTab.AddSection("game States")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart")
 
-BartTab.AddToggle("View FPS Game and MS", false, function(state)
+-- Salva posição original
+local originalCFrame = hrp.CFrame
+
+-- Pega todas as máquinas
+local slotFolder = workspace:WaitForChild("lobbyCage"):WaitForChild("fun")
+local slotMachines = {}
+
+for _, obj in ipairs(slotFolder:GetChildren()) do
+	if obj:FindFirstChild("lever") and obj.lever:FindFirstChild("handle") and obj.lever.handle:FindFirstChild("ClickDetector") then
+		table.insert(slotMachines, obj)
+	end
+end
+
+-- Ativa cada máquina
+for _, machine in ipairs(slotMachines) do
+	local handle = machine.lever.handle
+	if handle and handle:FindFirstChild("ClickDetector") then
+		-- Teleporta para a máquina
+		hrp.CFrame = handle.CFrame + Vector3.new(0, 3, 0)
+		wait(0.1)
+
+		fireclickdetector(handle.ClickDetector)
+		wait(0.1)
+	end
+end
+
+-- Retorna à posição original
+hrp.CFrame = originalCFrame
+
+end)
+
+BartTab.AddButton("Open All Doors From Map Space", function()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local HRP = Character:WaitForChild("HumanoidRootPart")
+
+    local path = workspace:FindFirstChild("map") and workspace.map:FindFirstChild("Spaceship")
+    if not path then
+        notify("System", "Spaceship not found pls wait for the map", 4)
+        return
+    end
+
+    local doors = {}
+    for _, obj in ipairs(path:GetDescendants()) do
+        if obj:IsA("BasePart") then
+            local name = string.lower(obj.Name)
+            if name:find("door") or name:find("bartdoor") then
+                table.insert(doors, obj)
+            end
+        end
+    end
+
+    if #doors == 0 then
+        notify("System", "No doors found in Spaceship.", 4)
+        return
+    end
+
+    local originalPos = HRP.CFrame
+    notify("System", "Opening " .. #doors .. " Doors from Spaceship...", 5)
+
+    for _, door in ipairs(doors) do
+        if door and door:IsDescendantOf(workspace) then
+            HRP.CFrame = door.CFrame + door.CFrame.LookVector * -2
+            task.wait(0.02)
+            HRP.CFrame = door.CFrame + door.CFrame.LookVector * 2
+
+            local touch = door:FindFirstChildOfClass("TouchTransmitter") or door:FindFirstChild("TouchInterest")
+            if touch then
+                firetouchinterest(HRP, door, 0)
+                task.wait()
+                firetouchinterest(HRP, door, 1)
+            end
+        end
+    end
+
+    HRP.CFrame = originalPos
+    notify("System", "All doors interacted and fired successfully.", 5)
+end)
+
+BartTab.AddButton("Delete Doors From Map Space", function()
+local path = workspace:FindFirstChild("map") and workspace.map:FindFirstChild("Spaceship")
+if not path then
+notify("System", "Spaceship not found pls wait for the map", 4)
+return
+end
+
+local deleted = 0
+for _, obj in ipairs(path:GetChildren()) do
+    if obj:IsA("Model") or obj:IsA("Part") or obj:IsA("MeshPart") then
+        local name = string.lower(obj.Name)
+        if name:find("door") or name:find("bartdoor") then
+            obj:Destroy()
+            deleted += 30
+        end
+    end
+end
+
+notify("System", "Deleted " .. deleted .. " Doors / BartDoors from Spaceship.", 5)
+
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local spinning = false
+local spinConnection
+local rotation = 0
+
+BartTab.AddToggle("Spin Bot", false, function(state)
+spinning = state
+
+if spinning then
+	spinConnection = RunService.Heartbeat:Connect(function()
+		local char = LocalPlayer.Character
+		if not char or not char:FindFirstChild("Torso") then return end
+
+		local torso = char.Torso
+		rotation = (rotation + 8) % 360
+		torso.CFrame = torso.CFrame * CFrame.Angles(0, math.rad(8), 0)
+	end)
+else
+	if spinConnection then
+		spinConnection:Disconnect()
+		spinConnection = nil
+	end
+end
+
+end)
+
+BartTab.AddSection("tp walk")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local tpWalkEnabled = false
+local modes = {"Legit", "Mediam", "Hack"}
+local currentIndex = 1
+
+local tpSettings = {
+Legit = {distance = 0.02, delay = 0.01},
+Mediam = {distance = 0.12, delay = 0.01},
+Hack = {distance = 0.20, delay = 0.001}
+}
+
+local function getSettings()
+local currentMode = modes[currentIndex]
+return tpSettings[currentMode].distance, tpSettings[currentMode].delay, currentMode
+end
+
+local function tpStep()
+local character = LocalPlayer.Character
+if not character or not character:FindFirstChild("HumanoidRootPart") then return end
+
+local hrp = character.HumanoidRootPart
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+if not humanoid then return end
+
+local moveDir = humanoid.MoveDirection
+if moveDir.Magnitude > 0 then
+    local distance = select(1, getSettings())
+    hrp.CFrame = hrp.CFrame + moveDir * distance
+end
+
+end
+
+local function tpLoop()
+task.spawn(function()
+while tpWalkEnabled do
+tpStep()
+local _, delay = getSettings()
+task.wait(delay)
+end
+end)
+end
+
+BartTab.AddToggle("Active Mode", false, function(val)
+tpWalkEnabled = val
+if val then tpLoop() end
+end)
+
+BartTab.AddButton("> Change Mode Speed", function()
+currentIndex = currentIndex + 1
+if currentIndex > #modes then
+currentIndex = 1
+end
+local _, _, mode = getSettings()
+notify("TP Walk", "mode : " .. mode, 0.5)
+end)
+
+local FarmTab = createTab("Farm")
+
+FarmTab.AddSection("Farming V2")
+
+FarmTab.AddToggle("Automatic TP Kill | Homer", false, function(val)
+autoKill = val
+if val then autoKillLoop() end
+end)
+
+FarmTab.AddButton("Finish the Obby Hard", function()
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32, 232, 110)
+end
+end)
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local autoTp = false
+
+local function autoTpLoop()
+task.spawn(function()
+while autoTp do
+if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32, 232, 110)
+notify("System", "attempt", 0.6)
+task.wait(0.3)
+notify("System", "back...", 0.6)
+end
+task.wait(5.3)
+end
+end)
+end
+
+FarmTab.AddToggle("Auto Farm | Obby Hard", false, function(val)
+autoTp = val
+if val then
+autoTpLoop()
+end
+end)
+
+local TpTab = createTab("tps")
+
+TpTab.AddButton("tp map", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(5, -6, -108))
+end
+end)
+
+TpTab.AddButton("tp 2", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(0, 117, 83))
+end
+end)
+
+TpTab.AddButton("tp 3", function()
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 104, -10)
+end
+end)
+
+
+TpTab.AddSection("teleport save")
+
+local savedPosition = nil
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+function salvarPosicao()
+	local char = LocalPlayer.Character
+	if char and char:FindFirstChild("HumanoidRootPart") then
+		savedPosition = char.HumanoidRootPart.Position
+		notify("System", "saved", 1)
+		print("Posição salva:", savedPosition)
+	end
+end
+
+function tpPosicaoSalva()
+	if savedPosition and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+		LocalPlayer.Character:MoveTo(savedPosition)
+		notify("System", "teleportado", 1)
+	else
+		print("Nenhuma posição salva ou personagem inválido.")
+	end
+end
+
+TpTab.AddButton("Salvar posição", salvarPosicao)
+TpTab.AddButton("Teleportar para posição salva", tpPosicaoSalva)
+
+TpTab.AddSection("spoots")
+
+TpTab.AddButton("Tp to an Bart", function()
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local character = LocalPlayer.Character
+if not character or not character:FindFirstChild("Torso") then return end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= LocalPlayer and player.Team and player.Team.Name == "Bart" then
+        local name = string.lower(player.Name)
+        if name ~= "packj0" and name ~= "kit_cynalt" and name ~= "bk_faxbr" then
+            local targetChar = player.Character
+            if targetChar and targetChar:FindFirstChild("Torso") then
+                local targetPos = targetChar.Torso.CFrame * CFrame.new(0, 0, 3)
+                character.Torso.CFrame = targetPos
+                break
+            end
+        end
+    end
+end
+
+end)
+
+TpTab.AddButton("Tp to an Homer", function()
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+    local character = LocalPlayer.Character
+    if not character or not character:FindFirstChild("Torso") then return end
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Team and player.Team.Name == "Homer" then
+            local targetChar = player.Character
+            if targetChar and targetChar:FindFirstChild("Torso") then
+                local targetPos = targetChar.Torso.CFrame * CFrame.new(0, 0, 3)
+                character.Torso.CFrame = targetPos
+                break
+            end
+        end
+    end
+end)
+
+TpTab.AddButton("spoot Simpsons", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(47, -60, -97))
+end
+end)
+
+TpTab.AddButton("spoot Simpsons", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(73, -80, -1))
+end
+end)
+
+TpTab.AddButton("spoot island bar", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(-48, -114, -42))
+end
+end)
+
+TpTab.AddButton("spoot Island bar", function()
+local pl = game.Players.LocalPlayer
+if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+	pl.Character:MoveTo(Vector3.new(54, -55, -57))
+end
+end)
+
+local ConfigTab = createTab("Config")
+
+ConfigTab.AddSection("system")
+
+ConfigTab.AddButton("View FPS", function()
+local RunService = game:GetService("RunService")
+local fps = math.floor(1 / RunService.RenderStepped:Wait())
+notify("System", "FPS: " .. fps, 3)
+end)
+
+
+ConfigTab.AddSection("game States")
+
+ConfigTab.AddToggle("View FPS Game and MS", false, function(state)
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
@@ -1282,7 +1639,7 @@ end
 highlights = {}
 end
 
-BartTab.AddToggle("View Body", false, function(state)
+ConfigTab.AddToggle("View Body", false, function(state)
 viewBodyActive = state
 if state then
 enableViewBody()
@@ -1501,7 +1858,7 @@ self:ApplyColorEffect(selectionBox)
 
 end
 
-BartTab.AddToggle("View Position In Server", false, function(state)
+ConfigTab.AddToggle("View Position In Server", false, function(state)
 ghostActive = state
 if state then
 GhostManager:InitializeCharacter()
@@ -1524,300 +1881,12 @@ end
 end)
 
 
-BartTab.AddButton("Delete Doors From Map Space", function()
-local path = workspace:FindFirstChild("map") and workspace.map:FindFirstChild("Spaceship")
-if not path then
-notify("System", "Spaceship not found pls wait for the map", 4)
-return
-end
-
-local deleted = 0
-for _, obj in ipairs(path:GetChildren()) do
-    if obj:IsA("Model") or obj:IsA("Part") or obj:IsA("MeshPart") then
-        local name = string.lower(obj.Name)
-        if name:find("door") or name:find("bartdoor") then
-            obj:Destroy()
-            deleted += 30
-        end
-    end
-end
-
-notify("System", "Deleted " .. deleted .. " Doors / BartDoors from Spaceship.", 5)
-
-end)
-
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
-
-local spinning = false
-local spinConnection
-local rotation = 0
-
-BartTab.AddToggle("Spin Bot", false, function(state)
-spinning = state
-
-if spinning then
-	spinConnection = RunService.Heartbeat:Connect(function()
-		local char = LocalPlayer.Character
-		if not char or not char:FindFirstChild("Torso") then return end
-
-		local torso = char.Torso
-		rotation = (rotation + 8) % 360
-		torso.CFrame = torso.CFrame * CFrame.Angles(0, math.rad(8), 0)
-	end)
-else
-	if spinConnection then
-		spinConnection:Disconnect()
-		spinConnection = nil
-	end
-end
-
-end)
-
-BartTab.AddSection("tp walk")
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
-local tpWalkEnabled = false
-local modes = {"Legit", "Mediam", "Hack"}
-local currentIndex = 1
-
-local tpSettings = {
-Legit = {distance = 0.02, delay = 0.01},
-Mediam = {distance = 0.12, delay = 0.01},
-Hack = {distance = 0.20, delay = 0.001}
-}
-
-local function getSettings()
-local currentMode = modes[currentIndex]
-return tpSettings[currentMode].distance, tpSettings[currentMode].delay, currentMode
-end
-
-local function tpStep()
-local character = LocalPlayer.Character
-if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-
-local hrp = character.HumanoidRootPart
-local humanoid = character:FindFirstChildOfClass("Humanoid")
-if not humanoid then return end
-
-local moveDir = humanoid.MoveDirection
-if moveDir.Magnitude > 0 then
-    local distance = select(1, getSettings())
-    hrp.CFrame = hrp.CFrame + moveDir * distance
-end
-
-end
-
-local function tpLoop()
-task.spawn(function()
-while tpWalkEnabled do
-tpStep()
-local _, delay = getSettings()
-task.wait(delay)
-end
-end)
-end
-
-BartTab.AddToggle("Active Mode", false, function(val)
-tpWalkEnabled = val
-if val then tpLoop() end
-end)
-
-BartTab.AddButton("> Change Mode Speed", function()
-currentIndex = currentIndex + 1
-if currentIndex > #modes then
-currentIndex = 1
-end
-local _, _, mode = getSettings()
-notify("TP Walk", "mode : " .. mode, 0.5)
-end)
-
-local FarmTab = createTab("Farm")
-
-FarmTab.AddSection("Farming V2")
-
-FarmTab.AddToggle("Automatic TP Kill | Homer", false, function(val)
-autoKill = val
-if val then autoKillLoop() end
-end)
-
-FarmTab.AddButton("Finish the Obby Hard", function()
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32, 232, 110)
-end
-end)
-
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local autoTp = false
-
-local function autoTpLoop()
-task.spawn(function()
-while autoTp do
-if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-32, 232, 110)
-notify("System", "attempt", 0.6)
-task.wait(0.3)
-notify("System", "back...", 0.6)
-end
-task.wait(5.3)
-end
-end)
-end
-
-FarmTab.AddToggle("Auto Farm | Obby Hard", false, function(val)
-autoTp = val
-if val then
-autoTpLoop()
-end
-end)
-
-local TpTab = createTab("tps")
-
-TpTab.AddButton("tp 1", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(5, -6, -108))
-end
-end)
-
-TpTab.AddButton("tp 2", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(0, 117, 83))
-end
-end)
-
-TpTab.AddButton("tp 3", function()
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12, 104, -10)
-end
-end)
-
-
-TpTab.AddSection("teleport save")
-
-local savedPosition = nil
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
-function salvarPosicao()
-	local char = LocalPlayer.Character
-	if char and char:FindFirstChild("HumanoidRootPart") then
-		savedPosition = char.HumanoidRootPart.Position
-		notify("System", "saved", 5)
-		print("Posição salva:", savedPosition)
-	end
-end
-
-function tpPosicaoSalva()
-	if savedPosition and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-		LocalPlayer.Character:MoveTo(savedPosition)
-		notify("System", "teleportado", 5)
-	else
-		print("Nenhuma posição salva ou personagem inválido.")
-	end
-end
-
-TpTab.AddButton("Salvar posição", salvarPosicao)
-TpTab.AddButton("Teleportar para posição salva", tpPosicaoSalva)
-
-TpTab.AddSection("spoots")
-
-TpTab.AddButton("Tp to an Bart", function()
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local character = LocalPlayer.Character
-if not character or not character:FindFirstChild("Torso") then return end
-
-for _, player in ipairs(Players:GetPlayers()) do
-    if player ~= LocalPlayer and player.Team and player.Team.Name == "Bart" then
-        local name = string.lower(player.Name)
-        if name ~= "packj0" and name ~= "kit_cynalt" and name ~= "bk_faxbr" then
-            local targetChar = player.Character
-            if targetChar and targetChar:FindFirstChild("Torso") then
-                local targetPos = targetChar.Torso.CFrame * CFrame.new(0, 0, 3)
-                character.Torso.CFrame = targetPos
-                break
-            end
-        end
-    end
-end
-
-end)
-
-TpTab.AddButton("Tp to an Homer", function()
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
-    local character = LocalPlayer.Character
-    if not character or not character:FindFirstChild("Torso") then return end
-
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Team and player.Team.Name == "Homer" then
-            local targetChar = player.Character
-            if targetChar and targetChar:FindFirstChild("Torso") then
-                local targetPos = targetChar.Torso.CFrame * CFrame.new(0, 0, 3)
-                character.Torso.CFrame = targetPos
-                break
-            end
-        end
-    end
-end)
-
-TpTab.AddButton("spoot Simpsons", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(47, -60, -97))
-end
-end)
-
-TpTab.AddButton("spoot Simpsons", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(73, -80, -1))
-end
-end)
-
-TpTab.AddButton("spoot island bar", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(-48, -114, -42))
-end
-end)
-
-TpTab.AddButton("spoot Island bar", function()
-local pl = game.Players.LocalPlayer
-if pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-	pl.Character:MoveTo(Vector3.new(54, -55, -57))
-end
-end)
-
-local ConfigTab = createTab("Config")
-
-ConfigTab.AddSection("system")
-
-ConfigTab.AddButton("View FPS", function()
-local RunService = game:GetService("RunService")
-local fps = math.floor(1 / RunService.RenderStepped:Wait())
-notify("System", "FPS: " .. fps, 3)
-end)
-
-
-
-
 ConfigTab.AddButton("destroy GUI", function() ScreenGui:Destroy() end)
 
 
 local ScriptTab = createTab("Script")
 
-ScriptTab.AddButton("wall Hop Hub and ant cheat", function()
+ScriptTab.AddButton("wall Hop Hub ", function()
 
 
 wait(0.1)
@@ -1825,7 +1894,7 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-Hub
 
 end)
 
-ScriptTab.AddButton("fly script and ant cheat", function()
+ScriptTab.AddButton("fly script", function()
 
 
 wait(0.1)
@@ -1842,6 +1911,14 @@ end)
 ScriptTab.AddButton("bartender good", function()
 
 loadstring(game:HttpGet("https://rawscripts.net/raw/You-VS-Homer-Bartender-78034"))()
+
+end)
+
+local sugestaoTab = createTab("sugestao")
+
+ScriptTab.AddButton("carrega painel para enviar sugestão eu estou lendo todas!", function()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Ed-Sugestion/refs/heads/main/sugestao.lua.obfuscated.lua.txt"))()
 
 end)
 
