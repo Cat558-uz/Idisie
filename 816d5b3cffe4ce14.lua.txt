@@ -1,4 +1,4 @@
---== Seletor de Idioma Simples ==--
+-- AVISO APOS USAR ESTA HUB OU ENTRAR NO CODIGO GITHUB VOCÊ ACEITA TERMOS DE NAO ROUBAR ESTE CODIGO SOMENTE COM A PERMISSAO DO DONO 
 
 local Player = game.Players.LocalPlayer
 local Gui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
