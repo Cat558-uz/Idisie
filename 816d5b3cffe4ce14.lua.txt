@@ -2,6 +2,116 @@
 
 -- WARNING: AFTER USING THIS HUB OR ACCESSING THE GITHUB CODE, YOU AGREE TO THE TERMS OF NOT STEALING THIS CODE WITHOUT THE OWNER'S PERMISSION. THEY MAY PROSECUTE YOU FOR THEFT.
 
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local inviteLink = "https://discord.gg/yfPNEqKHdV"
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.ResetOnSpawn = false
+screenGui.Parent = PlayerGui
+
+local main = Instance.new("Frame", screenGui)
+main.Size = UDim2.new(0, 300, 0, 180)
+main.Position = UDim2.new(0.5, -10, 0.5, -30)
+main.AnchorPoint = Vector2.new(0.5, 0.5)
+main.BackgroundColor3 = Color3.fromRGB(20, 60, 180)
+main.BorderSizePixel = 0
+main.Active = true
+main.ClipsDescendants = true
+main.BackgroundTransparency = 1
+main.Size = UDim2.new(0, 0, 0, 0)
+
+local uiCorner = Instance.new("UICorner", main)
+uiCorner.CornerRadius = UDim.new(0, 12)
+
+local stroke = Instance.new("UIStroke", main)
+stroke.Thickness = 2
+stroke.Color = Color3.fromRGB(255, 255, 255)
+stroke.Transparency = 0.2
+
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 35)
+title.Position = UDim2.new(0, 0, 0, 10)
+title.BackgroundTransparency = 1
+title.Text = "Convite / Invite"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+
+local desc = Instance.new("TextLabel", main)
+desc.Size = UDim2.new(1, -20, 0, 30)
+desc.Position = UDim2.new(0, 10, 0, 55)
+desc.BackgroundTransparency = 1
+desc.Text = "Entre no nosso grupo DC"
+desc.TextColor3 = Color3.fromRGB(230, 230, 230)
+desc.Font = Enum.Font.Gotham
+desc.TextSize = 16
+desc.TextWrapped = true
+
+local button = Instance.new("TextButton", main)
+button.Size = UDim2.new(0.8, 0, 0, 45)
+button.Position = UDim2.new(0.1, 0, 0.65, 0)
+button.BackgroundColor3 = Color3.fromRGB(0, 100, 255)
+button.Text = "Entrar"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.GothamBold
+button.TextSize = 18
+
+local btnCorner = Instance.new("UICorner", button)
+btnCorner.CornerRadius = UDim.new(0, 10)
+
+-- Animação de aparecer
+TweenService:Create(main, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+	BackgroundTransparency = 0,
+	Size = UDim2.new(0, 300, 0, 180)
+}):Play()
+
+-- Clique no botão
+button.MouseButton1Click:Connect(function()
+	if setclipboard then
+		pcall(setclipboard, inviteLink)
+	end
+
+	local shrinkTween = TweenService:Create(main, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+		BackgroundTransparency = 1,
+		Size = UDim2.new(0, 0, 0, 0)
+	})
+	shrinkTween:Play()
+	shrinkTween.Completed:Wait()
+	screenGui:Destroy()
+end)
+
+-- Arrastar
+local dragging, dragInput, dragStart, startPos
+main.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = main.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+main.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		local delta = input.Position - dragStart
+		main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
 
 local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
