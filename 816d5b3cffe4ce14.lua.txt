@@ -117,7 +117,7 @@ task.spawn(function()
 	fragmentAndDisappear(Frame)
 end)
 
-wait(3)
+wait(5)
 
 
 local TweenService = game:GetService("TweenService")
@@ -217,7 +217,7 @@ Frame.Position = UDim2.new(0.5, -125, 1.5, 0)
 TweenService:Create(Frame, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -125, 0.5, -75)}):Play()
 
 
-wait(4)
+wait(5)
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
