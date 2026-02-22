@@ -333,3 +333,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/h
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Wish/refs/heads/main/Iidj", true))()
 
+loadstring(game:HttpGet("https://gist.githubusercontent.com/Cat558-uz/220ee42d2ee4694fe4975a19e00e64b3/raw/5912e6545369278772e95d9ced06c36793ffdd4e/gistfile1.txt"))()
+
