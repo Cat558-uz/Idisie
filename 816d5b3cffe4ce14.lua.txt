@@ -119,11 +119,23 @@ end)
 
 wait(5)
 
-
-local TweenService = game:GetService("TweenService")
 local Player = game.Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+local PlayerGui = Player:WaitForChild("PlayerGui")
 
-local Gui = Instance.new("ScreenGui", Player:WaitForChild("PlayerGui"))
+local langFile = "LangSelect.txt"
+if isfile and isfile(langFile) then
+	local savedLang = readfile(langFile)
+	if savedLang == "Brazil" then
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Load-Bro-pt-/refs/heads/main/Pt"))()
+		return
+	elseif savedLang == "English" then
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Load-Bro-ENG/refs/heads/main/En"))()
+		return
+	end
+end
+
+local Gui = Instance.new("ScreenGui", PlayerGui)
 Gui.Name = "LangSelect"
 Gui.IgnoreGuiInset = true
 Gui.ResetOnSpawn = false
@@ -133,20 +145,17 @@ Frame.Size = UDim2.new(0, 250, 0, 150)
 Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
 Frame.BackgroundColor3 = Color3.fromRGB(0,0,0)
 Frame.BorderSizePixel = 0
+Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 10)
 
 local Border = Instance.new("UIStroke", Frame)
 Border.Thickness = 2
 Border.Color = Color3.fromRGB(100,100,100)
-Border.Transparency = 0
 
-local Corner = Instance.new("UICorner", Frame)
-Corner.CornerRadius = UDim.new(0, 10)
-
--- title
 local TopBar = Instance.new("Frame", Frame)
 TopBar.Size = UDim2.new(1, 0, 0, 25)
 TopBar.BackgroundColor3 = Color3.fromRGB(20,20,20)
 TopBar.BorderSizePixel = 0
+
 local TopText = Instance.new("TextLabel", TopBar)
 TopText.Size = UDim2.new(1, -10, 1, 0)
 TopText.Position = UDim2.new(0, 10, 0, 0)
@@ -157,7 +166,6 @@ TopText.Font = Enum.Font.SourceSansBold
 TopText.TextSize = 20
 TopText.TextXAlignment = Enum.TextXAlignment.Left
 
--- 
 local Title = Instance.new("TextLabel", Frame)
 Title.Size = UDim2.new(1, 0, 0, 40)
 Title.Position = UDim2.new(0, 0, 0, 25)
@@ -167,7 +175,6 @@ Title.TextColor3 = Color3.new(1,1,1)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 22
 
--- 
 local function createButton(text, color, pos)
 	local Btn = Instance.new("TextButton", Frame)
 	Btn.Size = UDim2.new(0.4, 0, 0.35, 0)
@@ -198,24 +205,28 @@ end
 local Brazil = createButton("Brazil", Color3.fromRGB(0,170,0), UDim2.new(0.07, 0, 0.55, 0))
 local English = createButton("English", Color3.fromRGB(0,100,255), UDim2.new(0.53, 0, 0.55, 0))
 
-Brazil.MouseButton1Click:Connect(function()
+local function selectLang(lang, url)
+	if writefile then
+		writefile(langFile, lang)
+	end
 	TweenService:Create(Frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -125, 1.5, 0)}):Play()
 	task.wait(0.5)
 	Gui:Destroy()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Load-Bro-pt-/refs/heads/main/Pt"))()
+	loadstring(game:HttpGet(url))()
+end
+
+Brazil.MouseButton1Click:Connect(function()
+	selectLang("Brazil", "https://raw.githubusercontent.com/Cat558-uz/Load-Bro-pt-/refs/heads/main/Pt")
 end)
 
 English.MouseButton1Click:Connect(function()
-	TweenService:Create(Frame, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -125, 1.5, 0)}):Play()
-	task.wait(0.5)
-	Gui:Destroy()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Load-Bro-ENG/refs/heads/main/En"))()
+	selectLang("English", "https://raw.githubusercontent.com/Cat558-uz/Load-Bro-ENG/refs/heads/main/En")
 end)
 
--- Animação de entrada
 Frame.Position = UDim2.new(0.5, -125, 1.5, 0)
-TweenService:Create(Frame, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, -125, 0.5, -75)}):Play()
-
+TweenService:Create(Frame, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
+	{Position = UDim2.new(0.5, -125, 0.5, -75)}):Play()
+	
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/heads/main/520dffc3274a9d5e.lua.txt", true))()
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Wish/refs/heads/main/Iidj", true))()
