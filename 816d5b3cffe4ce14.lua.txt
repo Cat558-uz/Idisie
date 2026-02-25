@@ -1,3 +1,26 @@
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function removeLeaderstats(player)
+	if not player then return end
+	local ls = player:FindFirstChild("leaderstats")
+	if ls then ls:Destroy() end
+end
+
+for _, p in ipairs(Players:GetPlayers()) do
+	removeLeaderstats(p)
+end
+
+Players.PlayerAdded:Connect(function(p)
+	spawn(function()
+		local ok, _ = pcall(function()
+			local s = p:WaitForChild("leaderstats", 5)
+			if s then s:Destroy() end
+		end)
+	end)
+end)
+
 -- AVISO APOS USAR ESTA HUB OU ENTRAR NO CODIGO GITHUB VOCÊ ACEITA TERMOS DE NAO ROUBAR ESTE CODIGO SOMENTE COM A PERMISSAO DO DONO ELE PODE PROCESSAR POR ROUBO
 
 -- WARNING: AFTER USING THIS HUB OR ACCESSING THE GITHUB CODE, YOU AGREE TO THE TERMS OF NOT STEALING THIS CODE WITHOUT THE OWNER'S PERMISSION. THEY MAY PROSECUTE YOU FOR THEFT.
