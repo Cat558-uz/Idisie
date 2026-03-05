@@ -254,5 +254,5 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Eiei/refs/h
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/Wish/refs/heads/main/Iidj", true))()
 
-loadstring(game:HttpGet("https://gist.githubusercontent.com/Cat558-uz/220ee42d2ee4694fe4975a19e00e64b3/raw/c436965e5183b50fd7d99d91dbd396c5d3df9070/gistfile1.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Cat558-uz/CmdY/refs/heads/main/Fu5kSkiders"))()
 
