@@ -25,13 +25,6 @@ end)
 
 -- WARNING: AFTER USING THIS HUB OR ACCESSING THE GITHUB CODE, YOU AGREE TO THE TERMS OF NOT STEALING THIS CODE WITHOUT THE OWNER'S PERMISSION. THEY MAY PROSECUTE YOU FOR THEFT.
 
-
-if game.PlaceId ~= 108124933582607 then
-	game:GetService("Players").LocalPlayer:Kick("GAME NOT SUPORTEDDD!!!!!?")
-	return
-end
-
-
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
